@@ -1,16 +1,12 @@
 import React from "react";
-import { useRef, useEffect } from "react";
-import { TextInput, View, Text, Pressable } from "react-native";
+import { useState } from "react";
+import { TextInput, View, Text, Pressable, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Ionicons from '@expo/vector-icons/Ionicons';
 import { useDispatch, useSelector } from "react-redux";
 
-import { StyleSheet } from "react-native";
 import theme from "./theme";
-import { startTimer, pauseTimer, incrementTimer } from "../reducers/timerReducer";
-import { TimerState } from "../reducers/timerReducer";
-import timerUtil from '../utils/timerUtil'
 import TrackingStatistics from "./TrackingStatistics";
+import BarButtons from "./BarButtons";
 
 const styles = StyleSheet.create(
     {
@@ -45,36 +41,21 @@ const styles = StyleSheet.create(
 )
 
 const TaskTrackerBar = () => {
-    // Components, runningtaskinfo ?
-
-    const intervalRef = timerUtil.getIntervalRef()
     const dispatch = useDispatch()
-    const timerState = useSelector(state => state.timer.state)
-    const elapsedTime = useSelector(state => state.timer.elapsedTime)
+    const projects = useSelector(state => state.projects.projects)
 
-    useEffect(() => {
-        timerUtil.handleTimerStateChange(timerState, intervalRef, dispatch)
-    }, [timerState])
+    const [projectName, setProjectName] = useState<String>('') 
 
-    const buttonClicked = () => {
-        timerState === TimerState.running ? dispatch(pauseTimer()) : dispatch(startTimer())
+    const handleProjectName = (name: String): void => {
+        setProjectName(name)
     }
 
     return (
         <SafeAreaView  style={styles.mainContainer}>
             <TrackingStatistics />
             <View style={styles.taskBar}>
-                <TextInput style={styles.taskBarInput} placeholder="Enter project to track..."></TextInput>
-                <Pressable onPress={buttonClicked} style={styles.taskBarButton}>
-                    <View>
-                        <Ionicons name={timerState === TimerState.running ? "pause-outline" : "play-outline"} size={24} color={theme.colors.accent} />
-                    </View>
-                </Pressable>
-                <Pressable onPress={buttonClicked} style={styles.taskBarButton}>
-                    <View>
-                        <Ionicons name='stop-outline' size={24} color={theme.colors.accent} />
-                    </View>
-                </Pressable>
+                <TextInput style={styles.taskBarInput} onChangeText={handleProjectName} placeholder="Enter project to track..."></TextInput>
+                <BarButtons projects={projects} projectName={projectName} styles={styles}/>
             </View>
         </SafeAreaView>
     )

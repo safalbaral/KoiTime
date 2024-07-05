@@ -12,7 +12,7 @@ export interface TimerInterface {
 }
 
 const initialState: TimerInterface = {
-    state: TimerState.stopped,
+    state: TimerState.paused,
     elapsedTime: 0
 }
 

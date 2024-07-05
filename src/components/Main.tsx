@@ -7,6 +7,7 @@ import theme from "./theme";
 import store from "../store";
 
 import TaskTrackerBar from "./TaskTrackerBar";
+import ProjectListView from "./ProjectListView";
 
 const styles = StyleSheet.create({
     container: {
@@ -23,6 +24,7 @@ const Main = () => {
         <Provider store={store}>
             <View style={styles.container}>
                 <TaskTrackerBar />
+                <ProjectListView />
             </View>
         </Provider>
     )
