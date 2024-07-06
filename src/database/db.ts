@@ -102,6 +102,14 @@ export const getTasks = async (
   }
 };
 
+// TODO: Add project ID param
+export const getTask = async (
+  db: SQLite.SQLiteDatabase,
+  taskName: string
+): Promise<any> => {
+  return db.getFirstAsync("SELECT * FROM tasks WHERE name = ?", [taskName]);
+};
+
 export const updateTask = async (
   db: SQLite.SQLiteDatabase,
   id: number,
@@ -142,9 +150,9 @@ export const endTaskInstance = async (
 ): Promise<void> => {
   await db.runAsync(
     `UPDATE task_instances 
-     SET end_time = ?, 
-         total_minutes = ROUND((? - start_time) / 60) 
-     WHERE id = ?`,
+SET end_time = ?, 
+    total_minutes = ROUND(CAST(? - start_time AS BIGINT) / 60000.0, 2)
+WHERE id = ?`,
     [endTime, endTime, id]
   );
 };

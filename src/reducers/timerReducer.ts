@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-enum TimerStates {
+export enum TimerStates {
   started = "started",
   stopped = "stopped",
 }
@@ -25,9 +25,16 @@ const timerSlice = createSlice({
     resetTimer: (state) => {
       state.elapsedTime = 0;
     },
+    startState: (state) => {
+      state.timerState = TimerStates.started;
+    },
+    stopState: (state) => {
+      state.timerState = TimerStates.stopped;
+    },
   },
 });
 
-export const { incrementTimer, resetTimer } = timerSlice.actions;
+export const { incrementTimer, resetTimer, startState, stopState } =
+  timerSlice.actions;
 
 export default timerSlice.reducer;

@@ -1,7 +1,12 @@
-import { Text } from "react-native";
+import { Text, View } from "react-native";
+import TaskBar from "./TaskBar";
 
 const Main = () => {
-  return <Text>Main Component Placeholder</Text>;
+  return (
+    <View>
+      <TaskBar />
+    </View>
+  );
 };
 
 export default Main;

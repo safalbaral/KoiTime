@@ -1,19 +1,20 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, SafeAreaView } from "react-native";
+import { SafeAreaView } from "react-native";
 import { Provider } from "react-redux";
 
 import store from "./src/store";
 import Main from "./src/components/Main";
-import theme from "./src/theme";
 
 import { initDB } from "./src/database/db";
 import { SQLiteProvider } from "expo-sqlite";
+
+import tw from "twrnc";
 
 export default function App() {
   return (
     <SQLiteProvider onInit={initDB} databaseName="app.db">
       <Provider store={store}>
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={tw`flex-1 justify-center items-center`}>
           <Main />
           <StatusBar style="auto" />
         </SafeAreaView>
@@ -21,12 +22,3 @@ export default function App() {
     </SQLiteProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
