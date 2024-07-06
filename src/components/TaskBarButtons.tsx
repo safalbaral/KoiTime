@@ -26,13 +26,13 @@ import timerReducer, {
 
 const TaskBarButtons = ({ task }) => {
   const dispatch = useDispatch();
-  const timerState = useSelector((state) => state.timer.timerState);
+  const isTracking = useSelector((state) => state.currentTask.isTracking);
   const currentTaskState = useSelector((state) => state.currentTask.task);
   const db = useSQLiteContext();
 
   const handleTracking = async () => {
     /* CASE IF WE WANT TO ADD A TASK & START TRACKING: ie. IF THE TIMER STATE IS STOPPED ON PRESS*/
-    if (timerState === TimerStates.stopped) {
+    if (!isTracking) {
       // Check if name = name & proj = proj of task exist in db
       const taskInDB = await getTask(db, task);
       let id;
@@ -53,8 +53,7 @@ const TaskBarButtons = ({ task }) => {
 
       // Finally dispatch the task and set timer starte to start
       dispatch(addCurrentTask(taskToAdd));
-      dispatch(startState());
-    } else if (timerState === TimerStates.started) {
+    } else {
       const t_id = currentTaskState.t_id;
 
       const endTime = Date.now();
@@ -62,10 +61,7 @@ const TaskBarButtons = ({ task }) => {
       await endTaskInstance(db, t_id, endTime);
 
       dispatch(removeCurrentTask());
-      dispatch(stopState());
     }
-    console.log('WHAT"S IN THE DB AFTER THIS', await getTasks(db));
-    console.log("TASK INSTANCES", await getTaskInstances(db));
   };
 
   return (
@@ -73,11 +69,7 @@ const TaskBarButtons = ({ task }) => {
       <Pressable onPress={handleTracking}>
         <View>
           <Ionicons
-            name={
-              timerState === TimerStates.stopped
-                ? "play-outline"
-                : "pause-outline"
-            }
+            name={!isTracking ? "play-outline" : "pause-outline"}
             size={24}
           />
         </View>

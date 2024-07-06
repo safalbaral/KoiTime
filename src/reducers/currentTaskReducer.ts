@@ -23,12 +23,10 @@ const currentTaskSlice = createSlice({
     addCurrentTask: (state, action: PayloadAction<CurrentTaskDetails>) => {
       state.task = action.payload;
       state.isTracking = true;
-      console.log("STATE FOR CURRENT TASK AFTER ADD", state);
     },
     removeCurrentTask: (state) => {
       state.task = null;
       state.isTracking = false;
-      console.log("STATE FOR CURRENT TASK AFTER REMOVE", state);
     },
   },
 });
