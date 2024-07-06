@@ -11,10 +11,12 @@ import { SQLiteProvider } from 'expo-sqlite';
 export default function App() {
   return (
     <SQLiteProvider onInit={initDB} databaseName='app.db'>
-      <SafeAreaView style={styles.container}>
-        <Main />
-        <StatusBar style="auto" /> 
-      </SafeAreaView>
+      <Provider store={store}>
+        <SafeAreaView style={styles.container}>
+          <Main />
+          <StatusBar style="auto" /> 
+        </SafeAreaView>
+      </Provider>
     </SQLiteProvider>
   );
 }
