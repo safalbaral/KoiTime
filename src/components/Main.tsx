@@ -11,7 +11,7 @@ const Main = () => {
       <View style={tw`flex-1 items-center pb-4`}>
         <Text>AppTitle</Text>
       </View>
-      <View style={tw`flex-1 justify-stretch`}>
+      <View style={tw`flex-1`}>
         <View style={tw`flex items-center`}>
           <TaskStatistics />
           <TaskBar />

@@ -180,21 +180,26 @@ export const deleteTaskInstance = async (
 export const getRecentFiveTasks = async (
   db: SQLite.SQLiteDatabase
 ): Promise<any[]> => {
-  const result = await db.getAllAsync(`SELECT 
-                    t.id AS task_id,
-                    t.name AS task_name,
-                    p.name AS project_name,
-                    ti.start_time,
-                    ti.end_time,
-                    ti.total_minutes
-                    FROM 
-                        tasks t
-                    JOIN 
-                        task_instances ti ON t.id = ti.task_id
-                    LEFT JOIN 
-                        projects p ON t.project_id = p.id
-                    ORDER BY 
-                        ti.start_time DESC
-                    LIMIT 5;`);
+  const result = await db.getAllAsync(`
+                                      SELECT
+                                        ti.id AS task_instance_id,
+                                        t.id AS task_id,
+                                        t.name AS task_name,
+                                        p.name AS project_name,
+                                        ti.start_time,
+                                        ti.end_time,
+                                        ti.total_minutes
+                                      FROM
+                                        task_instances ti
+                                      JOIN
+                                        tasks t ON ti.task_id = t.id
+                                      LEFT JOIN
+                                        projects p ON t.project_id = p.id
+                                      WHERE
+                                        ti.end_time IS NOT NULL
+                                      ORDER BY
+                                        ti.end_time DESC
+                                      LIMIT 5;
+                                    `);
   return result;
 };
