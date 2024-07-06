@@ -176,3 +176,25 @@ export const deleteTaskInstance = async (
 ): Promise<void> => {
   await db.runAsync("DELETE FROM task_instances WHERE id = ?", [id]);
 };
+
+export const getRecentFiveTasks = async (
+  db: SQLite.SQLiteDatabase
+): Promise<any[]> => {
+  const result = await db.getAllAsync(`SELECT 
+                    t.id AS task_id,
+                    t.name AS task_name,
+                    p.name AS project_name,
+                    ti.start_time,
+                    ti.end_time,
+                    ti.total_minutes
+                    FROM 
+                        tasks t
+                    JOIN 
+                        task_instances ti ON t.id = ti.task_id
+                    LEFT JOIN 
+                        projects p ON t.project_id = p.id
+                    ORDER BY 
+                        ti.start_time DESC
+                    LIMIT 5;`);
+  return result;
+};
