@@ -1,6 +1,6 @@
-import * as SQLite from 'expo-sqlite';
+import * as SQLite from "expo-sqlite";
 
-const DB_NAME = "myapp.db";
+//const DB_NAME = "myapp.db";
 
 export const initDB = async (db: SQLite.SQLiteDatabase): Promise<void> => {
   try {
@@ -38,68 +38,108 @@ export const initDB = async (db: SQLite.SQLiteDatabase): Promise<void> => {
 };
 
 // Projects CRUD operations
-export const createProject = async (db: SQLite.SQLiteDatabase, name: string, isArchived: boolean): Promise<number> => {
+export const createProject = async (
+  db: SQLite.SQLiteDatabase,
+  name: string,
+  isArchived: boolean
+): Promise<number> => {
   //const db = await SQLite.openDatabaseAsync(DB_NAME);
   const result = await db.runAsync(
-    'INSERT INTO projects (name, is_archived) VALUES (?, ?)',
+    "INSERT INTO projects (name, is_archived) VALUES (?, ?)",
     [name, isArchived ? 1 : 0]
   );
   return result.lastInsertRowId;
 };
 
-export const getProjects = async (db: SQLite.SQLiteDatabase): Promise<any[]> => {
-  return db.getAllAsync('SELECT * FROM projects');
+export const getProjects = async (
+  db: SQLite.SQLiteDatabase
+): Promise<any[]> => {
+  return db.getAllAsync("SELECT * FROM projects");
 };
 
-export const updateProject = async (db: SQLite.SQLiteDatabase, id: number, name: string, isArchived: boolean): Promise<void> => {
+export const updateProject = async (
+  db: SQLite.SQLiteDatabase,
+  id: number,
+  name: string,
+  isArchived: boolean
+): Promise<void> => {
   await db.runAsync(
-    'UPDATE projects SET name = ?, is_archived = ? WHERE id = ?',
+    "UPDATE projects SET name = ?, is_archived = ? WHERE id = ?",
     [name, isArchived ? 1 : 0, id]
   );
 };
 
-export const deleteProject = async (db: SQLite.SQLiteDatabase, id: number): Promise<void> => {
-  await db.runAsync('DELETE FROM projects WHERE id = ?', [id]);
+export const deleteProject = async (
+  db: SQLite.SQLiteDatabase,
+  id: number
+): Promise<void> => {
+  await db.runAsync("DELETE FROM projects WHERE id = ?", [id]);
 };
 
 // Tasks CRUD operations
-export const createTask = async (db: SQLite.SQLiteDatabase, name: string, projectId: number): Promise<number> => {
+export const createTask = async (
+  db: SQLite.SQLiteDatabase,
+  name: string,
+  projectId: number
+): Promise<number> => {
   const result = await db.runAsync(
-    'INSERT INTO tasks (name, project_id) VALUES (?, ?)',
+    "INSERT INTO tasks (name, project_id) VALUES (?, ?)",
     [name, projectId]
   );
   return result.lastInsertRowId;
 };
 
-export const getTasks = async (db: SQLite.SQLiteDatabase, projectId?: number): Promise<any[]> => {
+export const getTasks = async (
+  db: SQLite.SQLiteDatabase,
+  projectId?: number
+): Promise<any[]> => {
   if (projectId) {
-    return db.getAllAsync('SELECT * FROM tasks WHERE project_id = ?', [projectId]);
+    return db.getAllAsync("SELECT * FROM tasks WHERE project_id = ?", [
+      projectId,
+    ]);
   } else {
-    return db.getAllAsync('SELECT * FROM tasks');
+    return db.getAllAsync("SELECT * FROM tasks");
   }
 };
 
-export const updateTask = async (db: SQLite.SQLiteDatabase, id: number, name: string, projectId: number): Promise<void> => {
-  await db.runAsync(
-    'UPDATE tasks SET name = ?, project_id = ? WHERE id = ?',
-    [name, projectId, id]
-  );
+export const updateTask = async (
+  db: SQLite.SQLiteDatabase,
+  id: number,
+  name: string,
+  projectId: number
+): Promise<void> => {
+  await db.runAsync("UPDATE tasks SET name = ?, project_id = ? WHERE id = ?", [
+    name,
+    projectId,
+    id,
+  ]);
 };
 
-export const deleteTask = async (db: SQLite.SQLiteDatabase, id: number): Promise<void> => {
-  await db.runAsync('DELETE FROM tasks WHERE id = ?', [id]);
+export const deleteTask = async (
+  db: SQLite.SQLiteDatabase,
+  id: number
+): Promise<void> => {
+  await db.runAsync("DELETE FROM tasks WHERE id = ?", [id]);
 };
 
 // Task Instances CRUD operations
-export const createTaskInstance = async (db: SQLite.SQLiteDatabase, taskId: number, startTime: number): Promise<number> => {
+export const createTaskInstance = async (
+  db: SQLite.SQLiteDatabase,
+  taskId: number,
+  startTime: number
+): Promise<number> => {
   const result = await db.runAsync(
-    'INSERT INTO task_instances (task_id, start_time) VALUES (?, ?)',
+    "INSERT INTO task_instances (task_id, start_time) VALUES (?, ?)",
     [taskId, startTime]
   );
   return result.lastInsertRowId;
 };
 
-export const endTaskInstance = async (db: SQLite.SQLiteDatabase, id: number, endTime: number): Promise<void> => {
+export const endTaskInstance = async (
+  db: SQLite.SQLiteDatabase,
+  id: number,
+  endTime: number
+): Promise<void> => {
   await db.runAsync(
     `UPDATE task_instances 
      SET end_time = ?, 
@@ -109,14 +149,22 @@ export const endTaskInstance = async (db: SQLite.SQLiteDatabase, id: number, end
   );
 };
 
-export const getTaskInstances = async (db: SQLite.SQLiteDatabase, taskId?: number): Promise<any[]> => {
+export const getTaskInstances = async (
+  db: SQLite.SQLiteDatabase,
+  taskId?: number
+): Promise<any[]> => {
   if (taskId) {
-    return db.getAllAsync('SELECT * FROM task_instances WHERE task_id = ?', [taskId]);
+    return db.getAllAsync("SELECT * FROM task_instances WHERE task_id = ?", [
+      taskId,
+    ]);
   } else {
-    return db.getAllAsync('SELECT * FROM task_instances');
+    return db.getAllAsync("SELECT * FROM task_instances");
   }
 };
 
-export const deleteTaskInstance = async (db: SQLite.SQLiteDatabase, id: number): Promise<void> => {
-  await db.runAsync('DELETE FROM task_instances WHERE id = ?', [id]);
+export const deleteTaskInstance = async (
+  db: SQLite.SQLiteDatabase,
+  id: number
+): Promise<void> => {
+  await db.runAsync("DELETE FROM task_instances WHERE id = ?", [id]);
 };

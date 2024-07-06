@@ -1,9 +1,7 @@
-import { Text } from "react-native"
+import { Text } from "react-native";
 
 const Main = () => {
-    return(
-        <Text>Main Component Placeholder</Text>
-    )
-} 
+  return <Text>Main Component Placeholder</Text>;
+};
 
-export default Main
+export default Main;
