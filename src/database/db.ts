@@ -10,7 +10,8 @@ export const initDB = async (db: SQLite.SQLiteDatabase): Promise<void> => {
       CREATE TABLE IF NOT EXISTS projects (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
-        is_archived INTEGER NOT NULL
+        is_archived INTEGER NOT NULL,
+        color TEXT NOT NULL
       );
 
       CREATE TABLE IF NOT EXISTS tasks (
