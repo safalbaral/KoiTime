@@ -4,6 +4,7 @@ import { Pressable, View, Text } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import tw from "twrnc";
 import { useSQLiteContext } from "expo-sqlite";
+import Dropdown from "./Dropdown";
 
 import {
   getTask,
@@ -18,11 +19,7 @@ import {
   CurrentTaskDetails,
   removeCurrentTask,
 } from "../reducers/currentTaskReducer";
-import timerReducer, {
-  TimerStates,
-  startState,
-  stopState,
-} from "../reducers/timerReducer";
+import { resetTimer } from "../reducers/timerReducer";
 
 const TaskBarButtons = ({ task }) => {
   const dispatch = useDispatch();
@@ -61,6 +58,7 @@ const TaskBarButtons = ({ task }) => {
       await endTaskInstance(db, t_id, endTime);
 
       dispatch(removeCurrentTask());
+      dispatch(resetTimer());
     }
   };
 
@@ -76,8 +74,12 @@ const TaskBarButtons = ({ task }) => {
       </Pressable>
       <Pressable>
         <View style={tw`flex flex-row`}>
-          <Ionicons name="briefcase-outline" size={24} />
-          <Text>Choose Project</Text>
+          <Dropdown
+            selectedItemName="none"
+            onSelectItem={(name: string) => null}
+            icon="briefcase-outline"
+            items={[{ name: "a", value: "b" }]}
+          />
         </View>
       </Pressable>
     </View>
