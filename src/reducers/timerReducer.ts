@@ -19,6 +19,9 @@ const timerSlice = createSlice({
   name: "timer",
   initialState,
   reducers: {
+    setTime: (state, action) => {
+      state.elapsedTime = action.payload;
+    },
     incrementTimer: (state) => {
       state.elapsedTime += 1;
     },
@@ -34,7 +37,7 @@ const timerSlice = createSlice({
   },
 });
 
-export const { incrementTimer, resetTimer, startState, stopState } =
+export const { incrementTimer, resetTimer, startState, stopState, setTime } =
   timerSlice.actions;
 
 export default timerSlice.reducer;
