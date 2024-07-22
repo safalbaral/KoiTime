@@ -10,7 +10,6 @@ import { formatTime } from "../utils/time";
 const PrimaryTimer = () => {
   const isTracking = useSelector((state) => state.currentTask.isTracking);
   const elapsedTime = useSelector((state) => state.timer.elapsedTime);
-  console.log("ELAPSED TIME", elapsedTime);
   const currentTaskState = useSelector((state) => state.currentTask.task);
   const dispatch = useDispatch();
 

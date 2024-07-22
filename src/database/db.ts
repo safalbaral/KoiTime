@@ -29,6 +29,9 @@ export const initDB = async (db: SQLite.SQLiteDatabase): Promise<void> => {
         total_minutes INTEGER,
         FOREIGN KEY (task_id) REFERENCES tasks (id)
       );
+
+      INSERT OR IGNORE INTO projects (id, name, is_archived, color)
+      VALUES (1, 'Default Project', 0, '#FF0000');
     `);
 
     console.log("Database initialized successfully");
@@ -42,12 +45,13 @@ export const initDB = async (db: SQLite.SQLiteDatabase): Promise<void> => {
 export const createProject = async (
   db: SQLite.SQLiteDatabase,
   name: string,
-  isArchived: boolean
+  isArchived: boolean,
+  color: string
 ): Promise<number> => {
   //const db = await SQLite.openDatabaseAsync(DB_NAME);
   const result = await db.runAsync(
-    "INSERT INTO projects (name, is_archived) VALUES (?, ?)",
-    [name, isArchived ? 1 : 0]
+    "INSERT INTO projects (name, is_archived, color) VALUES (?, ?, ?)",
+    [name, isArchived ? 1 : 0, color]
   );
   return result.lastInsertRowId;
 };
@@ -56,6 +60,15 @@ export const getProjects = async (
   db: SQLite.SQLiteDatabase
 ): Promise<any[]> => {
   return db.getAllAsync("SELECT * FROM projects");
+};
+
+export const getProject = async (
+  db: SQLite.SQLiteDatabase,
+  projectId: number
+): Promise<any> => {
+  return db.getFirstAsync("SELECT * FROM projects tasks WHERE id = ?", [
+    projectId,
+  ]);
 };
 
 export const updateProject = async (
@@ -187,6 +200,7 @@ export const getRecentFiveTasks = async (
                                         t.id AS task_id,
                                         t.name AS task_name,
                                         p.name AS project_name,
+                                        p.color AS project_color,
                                         ti.start_time,
                                         ti.end_time,
                                         ti.total_minutes
