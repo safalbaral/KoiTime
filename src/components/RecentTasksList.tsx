@@ -27,8 +27,64 @@ const RecentTasksList = () => {
   }, [isTracking]);
 
   const renderTaskItem = ({ item }) => (
-    <View style={tw`border rounded flex flex-row mb-2 overflow-hidden`}>
-      <View style={tw`flex-1 p-2 border-r`}>
+    <View
+      style={tw`bg-slate-50 rounded-2xl shadow-md shadow-slate-500 flex flex-row mb-2 overflow-hidden mx-2`}
+    >
+      <View style={tw`flex flex-2 gap-5 bg-slate-300 p-4 justify-between`}>
+        <View>
+          <Text
+            style={tw`font-semibold text-lg text-slate-800`}
+            numberOfLines={1}
+            ellipsizeMode="tail"
+          >
+            {item.task_name}
+          </Text>
+        </View>
+        <View style={tw`bg-slate-100 rounded-full p-2 self-start flex-row`}>
+          <View
+            style={tw`w-4 h-4 rounded-full mr-3`}
+            backgroundColor={item.project_color}
+          />
+          <Text
+            style={tw`font-semibold text-xs text-slate-500`}
+            numberOfLines={1}
+            ellipsizeMode="tail"
+          >
+            {item.project_name}
+          </Text>
+        </View>
+      </View>
+      <View style={tw`flex-1 p-4`}>
+        <Text style={tw`text-slate-500`}>Tracked</Text>
+        <Text style={tw`text-slate-500 font-bold`}>
+          {item.total_minutes} minutes
+        </Text>
+        <Text style={tw`text-slate-500`}>From</Text>
+        <Text style={tw`text-slate-500 font-bold`}>
+          {new Date(item.end_time).toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+          })}
+        </Text>
+        <Text style={tw`text-slate-500`}>To</Text>
+        <Text style={tw`text-slate-500 font-bold`}>
+          {item.end_time
+            ? new Date(item.end_time).toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+              })
+            : "Ongoing"}
+        </Text>
+      </View>
+    </View>
+  );
+
+  /*
+  const renderTaskItem = ({ item }) => (
+    <View
+      style={tw`border-0 bg-teal-50 rounded flex flex-col mb-2 overflow-hidden`}
+    >
+      <View style={tw`flex-1 p-2 border-r flex-row`}>
         <Text style={tw`font-semibold`} numberOfLines={1} ellipsizeMode="tail">
           {item.task_name}
         </Text>
@@ -51,10 +107,12 @@ const RecentTasksList = () => {
       </View>
     </View>
   );
-
+*/
   return (
-    <View style={tw`flex-1 w-full px-2`}>
-      <Text style={tw`text-base text-center`}>Recent Tasks</Text>
+    <View style={tw`flex-1`}>
+      <View>
+        <Text style={tw`text-center text-lg py-2`}>Recent Tasks</Text>
+      </View>
       <FlatList
         data={topFive}
         renderItem={renderTaskItem}
