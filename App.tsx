@@ -22,17 +22,15 @@ import BottomNavbar from "./src/components/BottomNavbar";
 import TasksView from "./src/components/TasksView";
 
 export default function App() {
-  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
-  const slideAnim = useRef(new Animated.Value(0)).current;
+  const fadeAnim = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       "keyboardDidShow",
       () => {
-        setKeyboardVisible(true);
-        Animated.timing(slideAnim, {
-          toValue: 100,
-          duration: 300,
+        Animated.timing(fadeAnim, {
+          toValue: 0,
+          duration: 0,
           useNativeDriver: true,
         }).start();
       }
@@ -40,10 +38,9 @@ export default function App() {
     const keyboardDidHideListener = Keyboard.addListener(
       "keyboardDidHide",
       () => {
-        setKeyboardVisible(false);
-        Animated.timing(slideAnim, {
-          toValue: 0,
-          duration: 300,
+        Animated.timing(fadeAnim, {
+          toValue: 1,
+          duration: 0,
           useNativeDriver: true,
         }).start();
       }
@@ -76,7 +73,7 @@ export default function App() {
               </KeyboardAvoidingView>
               <Animated.View
                 style={{
-                  transform: [{ translateY: slideAnim }],
+                  opacity: fadeAnim,
                   position: "absolute",
                   left: 0,
                   right: 0,
