@@ -3,10 +3,13 @@ import { View, Text, Pressable, Platform } from "react-native";
 import { useNavigate, useLocation } from "react-router-native";
 import { Ionicons } from "@expo/vector-icons";
 import tw from "twrnc";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const BottomNavbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const insets = useSafeAreaInsets();
+
   const navItems = [
     { path: "/", icon: "home-outline", label: "Home" },
     { path: "/projects", icon: "list-outline", label: "Projects" },
@@ -17,8 +20,8 @@ const BottomNavbar = () => {
     <View
       style={[
         tw`absolute bottom-0 left-0 right-0`,
-        { paddingBottom: Platform.OS === "ios" ? 20 : 0 }, // Add padding for iOS devices
-        { zIndex: 1000 }, // Ensure it stays on top
+        { paddingBottom: Platform.OS === "ios" ? insets.bottom : 0 },
+        { zIndex: 1000 },
       ]}
     >
       <View
