@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
-import { Pressable, View, Text, Alert } from "react-native";
+import { Pressable, View, Keyboard, Alert } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import tw from "twrnc";
 import { useSQLiteContext } from "expo-sqlite";
@@ -43,6 +43,7 @@ const TaskBarButtons = ({ task }) => {
   }, []);
 
   const handleTracking = async () => {
+    Keyboard.dismiss();
     if (task === "") {
       Alert.alert(
         "Error",
