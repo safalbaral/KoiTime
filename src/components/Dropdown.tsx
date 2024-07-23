@@ -47,7 +47,11 @@ const Dropdown: React.FC<DropdownProps> = ({
         onPress={() => setModalVisible(true)}
       >
         {icon ? (
-          <Ionicons name={"briefcase-outline"} size={18} />
+          <Ionicons
+            name={"briefcase-outline"}
+            size={18}
+            color={selectedItemObj?.value}
+          />
         ) : (
           <View
             style={[tw`rounded-full w-4 h-4 mr-3`]}
@@ -55,8 +59,8 @@ const Dropdown: React.FC<DropdownProps> = ({
           />
         )}
         <Text
-          style={[tw`ml-2 text-slate-800 max-w-18`]}
-          numberOfLines={1}
+          style={[tw`ml-2 text-slate-800 max-w-18 font-semibold text-xs`]}
+          numberOfLines={2}
           ellipsizeMode="tail"
         >
           {selectedItemName}
