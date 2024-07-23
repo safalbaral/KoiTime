@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { StatusBar } from "expo-status-bar";
-import { KeyboardAvoidingView, Platform, View } from "react-native";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  View,
+  Keyboard,
+  Animated,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Provider } from "react-redux";
@@ -16,6 +22,39 @@ import BottomNavbar from "./src/components/BottomNavbar";
 import TasksView from "./src/components/TasksView";
 
 export default function App() {
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+  const slideAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      () => {
+        setKeyboardVisible(true);
+        Animated.timing(slideAnim, {
+          toValue: 100,
+          duration: 300,
+          useNativeDriver: true,
+        }).start();
+      }
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      () => {
+        setKeyboardVisible(false);
+        Animated.timing(slideAnim, {
+          toValue: 0,
+          duration: 300,
+          useNativeDriver: true,
+        }).start();
+      }
+    );
+
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
+  }, []);
+
   return (
     <NativeRouter>
       <SafeAreaProvider>
@@ -34,8 +73,18 @@ export default function App() {
                     <Route path="/tasks/:projectId" element={<TasksView />} />
                   </Routes>
                 </View>
-                <BottomNavbar />
               </KeyboardAvoidingView>
+              <Animated.View
+                style={{
+                  transform: [{ translateY: slideAnim }],
+                  position: "absolute",
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                }}
+              >
+                <BottomNavbar />
+              </Animated.View>
               <StatusBar style="auto" />
             </SafeAreaView>
           </Provider>
