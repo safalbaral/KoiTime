@@ -11,7 +11,6 @@ import { Ionicons } from "@expo/vector-icons";
 import tw from "twrnc";
 import { Task, TaskInstance, Project } from "../types";
 import { useSQLiteContext } from "expo-sqlite";
-import { SafeAreaView } from "react-native-safe-area-context";
 import {
   getTasks,
   getTaskInstances,
@@ -23,6 +22,7 @@ import { useParams } from "react-router-native";
 const TaskItem: React.FC<{ task: Task }> = ({ task, handleTaskDelete }) => {
   const [expanded, setExpanded] = useState(false);
   const [instances, setInstances] = useState<TaskInstance[]>([]);
+  const [totalTime, setTotalTime] = useState(0);
   const db = useSQLiteContext();
 
   useEffect(() => {
@@ -33,12 +33,17 @@ const TaskItem: React.FC<{ task: Task }> = ({ task, handleTaskDelete }) => {
       }
     };
     fetchInstances();
+    setTotalTime(calculateTotalTime());
   }, [expanded, db, task.id]);
 
-  const totalTime = instances.reduce(
-    (sum, instance) => sum + (instance.total_minutes || 0),
-    0
-  );
+  const calculateTotalTime = () => {
+    const total = instances.reduce(
+      (sum, instance) => sum + (instance.total_minutes || 0),
+      0
+    );
+    return total;
+  };
+
   const hours = Math.floor(totalTime / 60);
   const minutes = totalTime % 60;
 
@@ -154,7 +159,7 @@ const TasksView = () => {
   const minutes = totalTime % 60;
 
   return (
-    <SafeAreaView style={tw`flex-1`}>
+    <View style={tw`flex-1`}>
       <Text style={tw`text-2xl font-bold mb-4 text-slate-800 text-center mt-4`}>
         {project?.name || "Project Tasks"}
       </Text>
@@ -177,7 +182,7 @@ const TasksView = () => {
           ))}
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 

@@ -5,7 +5,6 @@ import tw from "twrnc";
 import { ProjectWithTasks } from "../types";
 import { retrieveActiveProjectsWithTasks } from "../utils/formatted_data_utils";
 import { useSQLiteContext } from "expo-sqlite";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 const StatisticsItem: React.FC<{ project: ProjectWithTasks }> = ({
   project,
@@ -17,7 +16,7 @@ const StatisticsItem: React.FC<{ project: ProjectWithTasks }> = ({
   const minutes = totalTime % 60;
 
   return (
-    <View style={tw`mb-4 bg-white rounded-lg shadow-sm overflow-hidden`}>
+    <View style={tw`mb-4 bg-slate-50 rounded-lg shadow-sm overflow-hidden`}>
       <TouchableOpacity
         style={tw`flex-row items-center justify-between p-4`}
         onPress={() => setExpanded(!expanded)}
@@ -90,7 +89,7 @@ const Statistics: React.FC = () => {
   }
 
   return (
-    <SafeAreaView style={tw`flex-1`}>
+    <View style={tw`flex-1`}>
       <Text style={tw`text-2xl font-bold mb-4 text-slate-800 text-center mt-4`}>
         Statistics
       </Text>
@@ -101,7 +100,7 @@ const Statistics: React.FC = () => {
           ))}
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 export default Statistics;

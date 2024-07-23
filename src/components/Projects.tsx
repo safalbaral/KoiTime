@@ -36,7 +36,7 @@ const Projects = () => {
   };
 
   return (
-    <SafeAreaView style={tw`flex-1`}>
+    <View style={tw`flex-1`}>
       <View>
         <Text style={tw`text-2xl font-bold mt-4 text-center`}>Projects</Text>
       </View>
@@ -49,7 +49,7 @@ const Projects = () => {
         />
       </View>
       <BottomNavbar />
-    </SafeAreaView>
+    </View>
   );
 };
 

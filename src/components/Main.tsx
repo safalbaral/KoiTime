@@ -4,11 +4,13 @@ import TaskBar from "./TaskBar";
 import RecentTasksList from "./RecentTasksList";
 import tw from "twrnc";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import PrimaryTimer from "./PrimaryTimer";
 
 const Main = () => {
+  const insets = useSafeAreaInsets();
   return (
-    <SafeAreaView style={tw`flex-1`}>
+    <View style={[tw`flex-1`, { paddingTop: insets.top }]}>
       <View>
         <Text style={tw`text-xl font-semibold text-center mt-4`}>AppTitle</Text>
       </View>
@@ -25,7 +27,7 @@ const Main = () => {
           <RecentTasksList />
         </View>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

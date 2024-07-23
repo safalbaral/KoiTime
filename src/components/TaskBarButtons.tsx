@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
-import { Pressable, View, Text } from "react-native";
+import { Pressable, View, Text, Alert } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import tw from "twrnc";
 import { useSQLiteContext } from "expo-sqlite";
@@ -40,37 +40,44 @@ const TaskBarButtons = ({ task }) => {
   }, []);
 
   const handleTracking = async () => {
-    /* CASE IF WE WANT TO ADD A TASK & START TRACKING: ie. IF THE TIMER STATE IS STOPPED ON PRESS*/
-    if (!isTracking) {
-      // Check if name = name & proj = proj of task exist in db
-      const taskInDB = await getTask(db, task);
-      let id;
-      taskInDB === null
-        ? (id = await createTask(db, task, 1))
-        : (id = taskInDB.id); // TODO: Change the proj_id value when projects are implemented!
-
-      // Create a new task instance
-      const startTime = Date.now();
-      const t_id = await createTaskInstance(db, id, startTime);
-
-      // Format payload
-      const taskToAdd: CurrentTaskDetails = {
-        id: id,
-        name: task,
-        t_id: t_id,
-      };
-
-      // Finally dispatch the task and set timer starte to start
-      dispatch(addCurrentTask(taskToAdd));
+    if (task === "") {
+      Alert.alert(
+        "Error",
+        "Please enter a task name before starting tracking."
+      );
     } else {
-      const t_id = currentTaskState.t_id;
+      /* CASE IF WE WANT TO ADD A TASK & START TRACKING: ie. IF THE TIMER STATE IS STOPPED ON PRESS*/
+      if (!isTracking) {
+        // Check if name = name & proj = proj of task exist in db
+        const taskInDB = await getTask(db, task);
+        let id;
+        taskInDB === null
+          ? (id = await createTask(db, task, 1))
+          : (id = taskInDB.id); // TODO: Change the proj_id value when projects are implemented!
 
-      const endTime = Date.now();
+        // Create a new task instance
+        const startTime = Date.now();
+        const t_id = await createTaskInstance(db, id, startTime);
 
-      await endTaskInstance(db, t_id, endTime);
+        // Format payload
+        const taskToAdd: CurrentTaskDetails = {
+          id: id,
+          name: task,
+          t_id: t_id,
+        };
 
-      dispatch(removeCurrentTask());
-      dispatch(resetTimer());
+        // Finally dispatch the task and set timer starte to start
+        dispatch(addCurrentTask(taskToAdd));
+      } else {
+        const t_id = currentTaskState.t_id;
+
+        const endTime = Date.now();
+
+        await endTaskInstance(db, t_id, endTime);
+
+        dispatch(removeCurrentTask());
+        dispatch(resetTimer());
+      }
     }
   };
 
