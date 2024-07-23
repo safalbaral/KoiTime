@@ -30,7 +30,7 @@ const RecentTasksList = () => {
     <View
       style={tw`bg-slate-50 rounded-2xl shadow-md shadow-slate-500 flex flex-row mb-2 overflow-hidden mx-2`}
     >
-      <View style={tw`flex flex-2 gap-5 bg-slate-300 p-4 justify-between`}>
+      <View style={tw`flex flex-3 gap-5 bg-slate-300 p-4 justify-between`}>
         <View>
           <Text
             style={tw`font-semibold text-lg text-slate-800`}
@@ -40,25 +40,28 @@ const RecentTasksList = () => {
             {item.task_name}
           </Text>
         </View>
-        <View style={tw`bg-slate-100 rounded-full p-2 self-start flex-row`}>
-          <View
-            style={tw`w-4 h-4 rounded-full mr-3`}
-            backgroundColor={item.project_color}
-          />
+        <View style={tw`flex flex-row justify-between`}>
+          <View style={tw`bg-slate-100 rounded-full p-2 self-start flex-row`}>
+            <View
+              style={tw`w-4 h-4 rounded-full mr-3`}
+              backgroundColor={item.project_color}
+            />
+            <Text
+              style={tw`font-semibold text-xs text-slate-500`}
+              numberOfLines={1}
+              ellipsizeMode="tail"
+            >
+              {item.project_name}
+            </Text>
+          </View>
           <Text
-            style={tw`font-semibold text-xs text-slate-500`}
-            numberOfLines={1}
-            ellipsizeMode="tail"
+            style={tw`text-slate-500 font-bold bg-slate-100 self-start rounded-full p-2 text-xs`}
           >
-            {item.project_name}
+            {item.total_minutes} minutes
           </Text>
         </View>
       </View>
-      <View style={tw`flex-1 p-4`}>
-        <Text style={tw`text-slate-500`}>Tracked</Text>
-        <Text style={tw`text-slate-500 font-bold`}>
-          {item.total_minutes} minutes
-        </Text>
+      <View style={tw`flex-1 p-4 justify-center`}>
         <Text style={tw`text-slate-500`}>From</Text>
         <Text style={tw`text-slate-500 font-bold`}>
           {new Date(item.end_time).toLocaleTimeString([], {

@@ -8,17 +8,17 @@ import { DropdownItem } from "../types";
 type IoniconsName = React.ComponentProps<typeof Ionicons>["name"];
 
 interface DropdownProps {
-  icon?: IoniconsName;
   selectedItemName: string;
   onSelectItem: (name: string) => void;
   items: DropdownItem[];
+  icon?: boolean;
 }
 
 const Dropdown: React.FC<DropdownProps> = ({
   selectedItemName,
   onSelectItem,
-  icon,
   items,
+  icon,
 }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -47,16 +47,20 @@ const Dropdown: React.FC<DropdownProps> = ({
         onPress={() => setModalVisible(true)}
       >
         {icon ? (
-          <View>
-            <Ionicons name={icon} size={24} />
-          </View>
+          <Ionicons name={"briefcase-outline"} size={18} />
         ) : (
           <View
-            style={tw`w-6 h-6 rounded-full mr-3`}
+            style={[tw`rounded-full w-4 h-4 mr-3`]}
             backgroundColor={selectedItemObj?.value}
           />
         )}
-        <Text style={tw`text-slate-800`}>{selectedItemName}</Text>
+        <Text
+          style={[tw`ml-2 text-slate-800 max-w-18`]}
+          numberOfLines={1}
+          ellipsizeMode="tail"
+        >
+          {selectedItemName}
+        </Text>
       </TouchableOpacity>
       <Modal
         animationType="slide"

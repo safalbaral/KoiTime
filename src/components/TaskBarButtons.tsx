@@ -1,10 +1,11 @@
 import { Ionicons } from "@expo/vector-icons";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Pressable, View, Text } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import tw from "twrnc";
 import { useSQLiteContext } from "expo-sqlite";
 import Dropdown from "./Dropdown";
+import { retrieveProjectsWithColors } from "../utils/formatted_data_utils";
 
 import {
   getTask,
@@ -25,7 +26,18 @@ const TaskBarButtons = ({ task }) => {
   const dispatch = useDispatch();
   const isTracking = useSelector((state) => state.currentTask.isTracking);
   const currentTaskState = useSelector((state) => state.currentTask.task);
+  const [projectsWithColors, setProjectsWithColors] = useState([{}]);
+  const [selectedProject, setSelectedProject] = useState(""); // TODO: Because this works through the project name, need to implement validation in project form that doesn't allow user to create an active project with same names
   const db = useSQLiteContext();
+
+  useEffect(() => {
+    const updateProjects = async (): Promise<void> => {
+      const projs = await retrieveProjectsWithColors(db);
+      setProjectsWithColors(projs);
+      setSelectedProject(projs[0].name);
+    };
+    updateProjects();
+  }, []);
 
   const handleTracking = async () => {
     /* CASE IF WE WANT TO ADD A TASK & START TRACKING: ie. IF THE TIMER STATE IS STOPPED ON PRESS*/
@@ -63,7 +75,9 @@ const TaskBarButtons = ({ task }) => {
   };
 
   return (
-    <View style={tw`flex flex-row`}>
+    <View
+      style={tw`flex flex-row items-center ml-2 bg-slate-100 px-4 py-2 rounded-l-full rounded-r-full`}
+    >
       <Pressable onPress={handleTracking}>
         <View>
           <Ionicons
@@ -73,12 +87,12 @@ const TaskBarButtons = ({ task }) => {
         </View>
       </Pressable>
       <Pressable>
-        <View style={tw`flex flex-row`}>
+        <View style={tw`flex flex-row border-l-2 ml-2 border-slate-200`}>
           <Dropdown
-            selectedItemName="none"
-            onSelectItem={(name: string) => null}
-            icon="briefcase-outline"
-            items={[{ name: "a", value: "b" }]}
+            selectedItemName={selectedProject}
+            onSelectItem={setSelectedProject}
+            items={projectsWithColors}
+            icon={true}
           />
         </View>
       </Pressable>

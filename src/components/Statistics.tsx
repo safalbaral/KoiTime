@@ -3,8 +3,9 @@ import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import tw from "twrnc";
 import { ProjectWithTasks } from "../types";
-import { retrieveProjectsWithTasks } from "../utils/formatted_data_utils";
+import { retrieveActiveProjectsWithTasks } from "../utils/formatted_data_utils";
 import { useSQLiteContext } from "expo-sqlite";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const StatisticsItem: React.FC<{ project: ProjectWithTasks }> = ({
   project,
@@ -68,7 +69,7 @@ const Statistics: React.FC = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const fetchedProjects = await retrieveProjectsWithTasks(db);
+        const fetchedProjects = await retrieveActiveProjectsWithTasks(db);
         setProjects(fetchedProjects);
       } catch (error) {
         console.error("Error fetching projects:", error);
@@ -89,16 +90,18 @@ const Statistics: React.FC = () => {
   }
 
   return (
-    <ScrollView style={tw`flex-1 bg-gray-100`}>
-      <View style={tw`p-4`}>
-        <Text style={tw`text-2xl font-bold mb-4 text-slate-800`}>
-          Statistics
-        </Text>
-        {projects.map((project) => (
-          <StatisticsItem key={project.id} project={project} />
-        ))}
-      </View>
-    </ScrollView>
+    <SafeAreaView style={tw`flex-1`}>
+      <Text style={tw`text-2xl font-bold mb-4 text-slate-800 text-center mt-4`}>
+        Statistics
+      </Text>
+      <ScrollView>
+        <View style={tw`p-4`}>
+          {projects.map((project) => (
+            <StatisticsItem key={project.id} project={project} />
+          ))}
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 export default Statistics;

@@ -58,14 +58,16 @@ const PrimaryTimer = () => {
 
   if (!isTracking) {
     return (
-      <View style={tw`font-extrabold text-xl`}>
-        <Text style={tw`text-8xl font-extrabold`}>00:00:00</Text>
+      <View style={tw`bg-slate-50 p-5 rounded-full shadow-lg shadow-slate-600`}>
+        <Text style={tw`text-7xl font-extrabold text-slate-800 mt-2`}>
+          00:00:00
+        </Text>
       </View>
     );
   } else {
     return (
-      <View style={tw`font-extrabold text-xl`}>
-        <Text style={tw`text-8xl font-extrabold`}>
+      <View style={tw`bg-slate-50 p-5 rounded-full shadow-lg shadow-slate-600`}>
+        <Text style={tw`text-7xl font-extrabold text-slate-800 mt-2`}>
           {formatTime(elapsedTime)}
         </Text>
       </View>

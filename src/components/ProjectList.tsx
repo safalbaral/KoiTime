@@ -16,6 +16,7 @@ import {
   retrieveActiveProjects,
 } from "../utils/formatted_data_utils";
 import { useSQLiteContext } from "expo-sqlite";
+import { useNavigate } from "react-router-native";
 
 interface ProjectListProps {
   projects: Project[];
@@ -28,9 +29,14 @@ const ProjectList: React.FC<ProjectListProps> = ({
   onRename,
   onDelete,
 }) => {
+  const navigate = useNavigate();
   const db = useSQLiteContext();
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editName, setEditName] = useState("");
+
+  const handleProjectPress = (id: number) => {
+    navigate(`/tasks/${id}`);
+  };
 
   const handleDeleteProject = async (id: number) => {
     try {
@@ -88,6 +94,14 @@ const ProjectList: React.FC<ProjectListProps> = ({
           )}
         </View>
         <View style={tw`flex-row`}>
+          <TouchableOpacity
+            onPress={() => handleProjectPress(item.id)}
+            style={tw`bg-slate-700 rounded-full px-2 justify-center mr-2`}
+          >
+            <Text style={tw`text-white text-xs text-center font-medium`}>
+              View Tasks
+            </Text>
+          </TouchableOpacity>
           {isEditing ? (
             <TouchableOpacity
               onPress={() => {

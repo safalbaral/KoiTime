@@ -9,10 +9,13 @@ import tw from "twrnc";
 const TaskBar = () => {
   const [task, onChangeTask] = useState<string>("");
   return (
-    <View style={tw`flex flex-row border rounded p-1`}>
+    <View
+      style={tw`flex flex-row bg-slate-50 rounded-full shadow-lg shadow-slate-600`}
+    >
       <TextInput
         onChangeText={onChangeTask}
         placeholder="Write down a task to track!"
+        style={tw`px-4 py-2`}
       ></TextInput>
       <TaskBarButtons task={task} />
     </View>

@@ -75,7 +75,7 @@ export const updateProject = async (
   db: SQLite.SQLiteDatabase,
   id: number,
   name: string,
-  isArchived: boolean
+  isArchived: number //TODO: restrict to 1 and 0?
 ): Promise<void> => {
   await db.runAsync(
     "UPDATE projects SET name = ?, is_archived = ? WHERE id = ?",
