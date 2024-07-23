@@ -116,12 +116,15 @@ export const getTasks = async (
   }
 };
 
-// TODO: Add project ID param
 export const getTask = async (
   db: SQLite.SQLiteDatabase,
-  taskName: string
+  taskName: string,
+  projectID: number
 ): Promise<any> => {
-  return db.getFirstAsync("SELECT * FROM tasks WHERE name = ?", [taskName]);
+  return db.getFirstAsync(
+    "SELECT * FROM tasks WHERE name = ? AND project_id = ?",
+    [taskName, projectID]
+  );
 };
 
 export const updateTask = async (
@@ -216,5 +219,6 @@ export const getRecentFiveTasks = async (
                                         ti.end_time DESC
                                       LIMIT 5;
                                     `);
+  console.log("RESULT", result);
   return result;
 };
