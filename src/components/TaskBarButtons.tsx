@@ -5,7 +5,10 @@ import { useSelector, useDispatch } from "react-redux";
 import tw from "twrnc";
 import { useSQLiteContext } from "expo-sqlite";
 import Dropdown from "./Dropdown";
-import { retrieveProjectsWithColors } from "../utils/formatted_data_utils";
+import {
+  getProjectID,
+  retrieveProjectsWithColors,
+} from "../utils/formatted_data_utils";
 
 import {
   getTask,
@@ -49,10 +52,12 @@ const TaskBarButtons = ({ task }) => {
       /* CASE IF WE WANT TO ADD A TASK & START TRACKING: ie. IF THE TIMER STATE IS STOPPED ON PRESS*/
       if (!isTracking) {
         // Check if name = name & proj = proj of task exist in db
-        const taskInDB = await getTask(db, task);
+        const taskInDB = await getTask(db, task); //TODO" IMPLEMENT SOON! getTask doesn't check for project equality
+        let project_id = await getProjectID(db, selectedProject);
+        console.log("PROJ ID", project_id.id);
         let id;
         taskInDB === null
-          ? (id = await createTask(db, task, 1))
+          ? (id = await createTask(db, task, project_id.id))
           : (id = taskInDB.id); // TODO: Change the proj_id value when projects are implemented!
 
         // Create a new task instance
