@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text } from "react-native";
 import tw from "twrnc";
-import { SafeAreaView } from "react-native-safe-area-context";
 import ProjectForm from "./ProjectForm";
 import BottomNavbar from "./BottomNavbar";
 import ProjectList from "./ProjectList";
@@ -48,7 +47,6 @@ const Projects = () => {
           onDelete={handleDeleteProject}
         />
       </View>
-      <BottomNavbar />
     </View>
   );
 };
