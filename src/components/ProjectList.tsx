@@ -35,6 +35,7 @@ const ProjectList: React.FC<ProjectListProps> = ({
   const [editName, setEditName] = useState("");
 
   const handleProjectPress = (id: number) => {
+    console.log("PROJECY PRESS ID", id);
     navigate(`/tasks/${id}`);
   };
 

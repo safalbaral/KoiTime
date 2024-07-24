@@ -108,8 +108,8 @@ interface TasksViewProps {
 */
 
 const TasksView = () => {
-  const { stringProjectId } = useParams<{ projectId: string }>();
-  const projectId = parseInt(stringProjectId, 10);
+  let { projectId } = useParams<{ projectId: string }>();
+  projectId = parseInt(projectId, 10);
   const db = useSQLiteContext();
   const [tasks, setTasks] = useState<Task[]>([]);
   const [project, setProject] = useState<Project | null>(null);

@@ -108,10 +108,13 @@ export const getTasks = async (
   projectId?: number
 ): Promise<any[]> => {
   if (projectId) {
-    return db.getAllAsync("SELECT * FROM tasks WHERE project_id = ?", [
+    const result = db.getAllAsync("SELECT * FROM tasks WHERE project_id = ?", [
       projectId,
     ]);
+    console.log("HERE IS TASK RETRIEVAL RESULT", result);
+    return result;
   } else {
+    console.log("No projectID", projectId);
     return db.getAllAsync("SELECT * FROM tasks");
   }
 };
@@ -219,6 +222,5 @@ export const getRecentFiveTasks = async (
                                         ti.end_time DESC
                                       LIMIT 5;
                                     `);
-  console.log("RESULT", result);
   return result;
 };
