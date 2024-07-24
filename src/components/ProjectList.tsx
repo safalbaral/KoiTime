@@ -133,7 +133,7 @@ const ProjectList: React.FC<ProjectListProps> = ({
   };
   //TODO: Fix the view so that the navbar doesn't cover it, currently using hacky method of h-100, which doesn't work for all devices
   return (
-    <View style={tw`mt-6 h-100`}>
+    <View style={tw`mt-6 h-3/6`}>
       <Text style={tw`text-xl font-bold mb-4 text-slate-800`}>
         Current Projects
       </Text>
@@ -141,7 +141,7 @@ const ProjectList: React.FC<ProjectListProps> = ({
         data={projects}
         renderItem={renderProject}
         keyExtractor={(item) => item.id}
-        contentContainerStyle={tw`px-4 pb-80`}
+        contentContainerStyle={tw`px-4`}
       />
     </View>
   );
