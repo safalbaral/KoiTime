@@ -162,3 +162,20 @@ export const retrieveTaskInstanceStartTime = async (
     throw error;
   }
 };
+
+export const getProjectID = async (
+  db: SQLite.SQLiteDatabase,
+  projectName: string
+): Promise<{ id: number }> => {
+  try {
+    const result = await db.getFirstAsync(
+      "SELECT id FROM projects WHERE name = ?",
+      projectName
+    );
+
+    return result;
+  } catch (error) {
+    console.error("Error retrieving project id:", error);
+    throw error;
+  }
+};
