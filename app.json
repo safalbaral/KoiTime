@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "TimeTracker",
-    "slug": "TimeTracker",
-    "version": "1.0.0",
+    "name": "KoiTime",
+    "slug": "KoiTime",
+    "version": "0.5.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -18,7 +18,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.anonymous.KoiTime"
     },
     "web": {
       "favicon": "./assets/favicon.png"
