@@ -64,7 +64,7 @@ const RecentTasksList = () => {
       <View style={tw`flex-1 p-4 justify-center`}>
         <Text style={tw`text-slate-500`}>From</Text>
         <Text style={tw`text-slate-500 font-bold`}>
-          {new Date(item.end_time).toLocaleTimeString([], {
+          {new Date(item.start_time).toLocaleTimeString([], {
             hour: "2-digit",
             minute: "2-digit",
           })}
