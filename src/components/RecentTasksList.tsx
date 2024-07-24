@@ -120,7 +120,9 @@ const RecentTasksList = () => {
         data={topFive}
         renderItem={renderTaskItem}
         keyExtractor={(item) => item.task_instance_id.toString()}
-        ListEmptyComponent={<Text>No recent tasks found.</Text>}
+        ListEmptyComponent={
+          <Text style={tw`text-center`}>No tasks tracked yet. </Text>
+        }
       />
     </View>
   );
