@@ -1,27 +1,24 @@
 # KoiTime
 
-KoiTime is a beautiful Expo-powered React Native application designed to help users efficiently track time spent on tasks and projects.
-
-**Koi Time is still under development**
+KoiTime is an Expo-powered React Native application designed to help users efficiently track time spent on tasks and projects.
 
 ![Images of Koi Time](./images/KoiTime.png)
 
-## 🚀 Tech Stack
+## Tech Stack
 
 - **Frontend:** React Native with Expo
 - **State Management:** Redux
 - **Local Database:** SQLite
 - **UI Kit:** TWRNC
 
-## 🔥 Key Features
+## Key Features
 
-- 📊 Track time for multiple projects and tasks
-- ⏱️ Intuitive interface for starting and stopping timers
-- 🏷️ Advanced task categorization with custom projects
-- 📅 Comprehensive statistics for each project
-- 🔒 Local data storage using SQLite
+- Ability to track time for multiple projects and tasks
+- Task categorization with custom projects
+- Comprehensive statistics for each project
+- Local data storage using SQLite
 
-## 🛠️ Installation
+## Installation
 
 1. Clone this repository:
    ```
@@ -40,7 +37,7 @@ KoiTime is a beautiful Expo-powered React Native application designed to help us
    expo start
    ```
 
-## 🖥️ Development
+## Development
 
 To run the app on a simulator/emulator:
 
@@ -49,7 +46,7 @@ To run the app on a simulator/emulator:
 
 To run on a physical device, ensure your device and development machine are on the same WiFi network, then scan the QR code with the Expo Go app.
 
-## 🏗️ Project Structure
+## Project Structure
 
 ```
 TimeTracker/
@@ -89,7 +86,7 @@ TimeTracker/
 └── tsconfig.json
 ```
 
-## 💾 Database Schema
+## Database Schema
 
 The SQLite database uses the following schema:
 
@@ -121,7 +118,7 @@ The SQLite database uses the following schema:
       VALUES (1, 'Default Project', 0, '#FF0000');
 ```
 
-## 🔧 Future Development Plans
+## Future Development Plans
 
 - Implement tests for the entire application
 - Fix bug in task statistics screen
